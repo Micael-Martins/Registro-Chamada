@@ -1,0 +1,77 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+// FUNÇÃO MENU PRINCIPAL
+int main(){ // do while prints, dps um switch case
+int escolha;
+    do{
+        printf("==================================\n");
+        printf("MENU:\n");
+        printf("1. Inserir um novo aluno\n");
+        printf("2. Listar alunos\n");
+        printf("3. Buscar aluno\n");
+        printf("4. Editar aluno\n");
+        printf("5. Remover aluno\n");
+        printf("6. Realizar chamada\n");
+        printf("7. Salvar chamada\n");
+        printf("0. Finalizar\n");
+        scanf("%d", &escolha)
+        printf("==================================\n");
+        switch(escolha){
+            case 1:
+                inserir_aluno();
+                break;
+            case 2:
+                listar_alunos();
+                break;
+            case 3; 
+                buscar_alunos();
+                break;
+            case 4;
+                editar_alunos();
+                break;
+            case 5;
+                remover_alunos();
+                break;
+            case 6;
+                chamada();
+                break;
+            case 7;
+                salvar();
+                break;
+            case 0;
+                printf("Fim da execução.\n");
+                return 0;
+        }
+    }
+
+}
+// FUNÇÃO INSERIR ALUNO
+int inserir_aluno(){
+
+}
+// FUNÇÃO LISTAR ALUNOS
+int listar_alunos(){
+
+}
+// FUNÇÃO BUSCAR ALUNOS
+int buscar_alunos(){
+
+}
+// FUNÇÃO EDITAR ALUNOS
+int editar_alunos(){
+
+}
+// FUNÇÃO REMOVER ALUNOS
+int remover_alunos(){
+
+}
+// FUNÇÃO CHAMADA, MARCANDO ALUNOS FALTANTES
+int chamada(){
+
+}
+// FUNÇÃO LER UMA DATA E SALVAR EM ARQUIVO NOMEADO PELA DATA
+int salvar(){
+
+}
