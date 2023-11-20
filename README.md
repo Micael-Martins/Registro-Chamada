@@ -9,8 +9,13 @@ Lista de chamada com as seguintes funções:
 7. Ler uma data e salvar chamada em arquivo nomeado pela data.
 
 Trabalho realizado por:
+
 Micael Martins - Lider
+
 Matheus Sales
+
 Matheu Neiva
+
 Arthur Ribeiro
+
 Otton Simão
