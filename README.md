@@ -14,7 +14,7 @@ Micael Martins - Lider
 
 Matheus Sales
 
-Matheu Neiva
+Matheus Neiva
 
 Arthur Ribeiro
 
