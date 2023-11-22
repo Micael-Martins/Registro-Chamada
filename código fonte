@@ -64,8 +64,19 @@ int editar_alunos(){
 
 }
 // FUNÇÃO REMOVER ALUNOS
-int remover_alunos(){
-
+ void removerAluno(struct ListaDePresenca *lista, const char *nome) {
+    int indice = buscarAluno(lista, nome);
+	//-1 quando n for encontrado
+    while (indice != -1 && indice < lista->quantidade - 1) {
+        lista->alunos[indice] = lista->alunos[indice + 1];
+        indice++;
+    }
+    if (indice != -1) {
+        lista->quantidade--;
+        printf("Aluno %s removido.\n", nome);
+    } else {
+        printf("Aluno não foi encontrado.\n");
+    }
 }
 // FUNÇÃO CHAMADA, MARCANDO ALUNOS FALTANTES
 int chamada(){
