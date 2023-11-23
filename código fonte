@@ -56,9 +56,85 @@ int listar_alunos(){
 
 }
 // FUNÇÃO BUSCAR ALUNOS
-int buscar_alunos(){
+#include <stdio.h>
+#include <string.h>
 
+#define MAX_ALUNOS 10
+#define TAM_NOME 10
+
+struct Aluno {
+    char nome[TAM_NOME];
+};
+
+int buscarAlunoPorNome(struct Aluno chamada[], int numAlunos, const char busca[]) {
+    for (int i = 0; i < numAlunos; i++) {
+        if (strcmp(chamada[i].nome, busca) == 0) {
+            return i;
+        }
+    }
+
+    return -1;
 }
+
+int buscarAlunoPorNumero(struct Aluno chamada[], int numAlunos, int numero) {
+    for (int i = 0; i < numAlunos; i++) {
+        if (i + 1 == numero) {
+            return i;
+        }
+    }
+
+    return -1;
+}
+
+int main() {
+    int numAlunos;
+
+    printf("Digite o numero de alunos: ");
+    scanf("%d", &numAlunos);
+
+    struct Aluno chamada[MAX_ALUNOS];
+
+    for (int i = 0; i < numAlunos; i++) {
+        printf("Digite o nome do aluno %d: ", i + 1);
+        scanf("%s", chamada[i].nome);
+    }
+
+    int escolhaBusca;
+    printf("Escolha o tipo de busca (1 para nome, 2 para numero): ");
+    scanf("%d", &escolhaBusca);
+
+    char busca[TAM_NOME];
+    int numero;
+
+    if (escolhaBusca == 1) {
+        printf("Digite o nome do aluno a ser buscado: ");
+        scanf("%s", busca);
+        printf("Busca por nome.\n");
+    } else if (escolhaBusca == 2) {
+        printf("Digite o numero do aluno: ");
+        scanf("%d", &numero);
+        printf("Busca por numero.\n");
+    } else {
+        printf("Escolha invalida.\n");
+        return 1;
+    }
+
+    int indice;
+    if (escolhaBusca == 1) {
+        indice = buscarAlunoPorNome(chamada, numAlunos, busca);
+    } else {
+        indice = buscarAlunoPorNumero(chamada, numAlunos, numero);
+    }
+
+    if (indice != -1) {
+        printf("Aluno encontrado na posicao %d da chamada: %s.\n", indice + 1, chamada[indice].nome);
+    } else {
+        printf("Aluno nao encontrado na chamada.\n");
+    }
+
+    return 0;
+}
+
 // FUNÇÃO EDITAR ALUNOS
 int editar_alunos(){
 
