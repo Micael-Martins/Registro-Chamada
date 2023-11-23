@@ -1,0 +1,10 @@
+void listarAluno(Aluno *lista, int posicao) {
+    if (posicao > 0) {
+        printf("Lista de chamada:\n");
+        for (int i = 1; i < posicao; i++) {
+            printf("%d. %s\n", i, lista[i].nome);
+        }
+    } else {
+        printf("A lista de chamada esta vazia\n");
+    }
+}
