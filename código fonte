@@ -2,9 +2,47 @@
 #include <stdlib.h>
 #include <string.h>
 
+typedef struct {
+    char nome[50];
+} Aluno;
+
 void limparBuffer() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF);
+}
+
+void inserirAluno(Aluno *lista, int *posicao) {
+    if (*posicao < 100) {
+        printf("Digite o nome do aluno:\n");
+
+        char buffer[50];
+        if (fgets(buffer, sizeof(buffer), stdin) != NULL) {
+            buffer[strcspn(buffer, "\n")] = '\0'; // Remove o caractere de nova linha
+
+            // Se a leitura não resultar em um número, assume que é o nome do aluno
+            if (sscanf(buffer, "%d", posicao) != 1) {
+                printf("Digite o nome do aluno:\n");
+                strncpy(lista[*posicao].nome, buffer, sizeof(lista[*posicao].nome));
+                (*posicao)++;
+                printf("Aluno inserido com sucesso\n");
+                return;
+            }
+        }
+
+        printf("Erro ao inserir aluno. Tente novamente.\n");
+    } else {
+        printf("A lista de chamada esta cheia. Impossivel adicionar mais alunos\n");
+    }
+}
+void listarAluno(Aluno *lista, int posicao) {
+    if (posicao > 0) {
+        printf("Lista de chamada:\n");
+        for (int i = 1; i < posicao; i++) {
+            printf("%d. %s\n", i, lista[i].nome);
+        }
+    } else {
+        printf("A lista de chamada esta vazia\n");
+    }
 }
 
 int main() {
