@@ -16,7 +16,7 @@ int escolha;
         printf("6. Realizar chamada\n");
         printf("7. Salvar chamada\n");
         printf("0. Finalizar\n");
-        scanf("%d", &escolha)
+        scanf("%d", &escolha);
         printf("==================================\n");
         switch(escolha){
             case 1:
@@ -25,26 +25,30 @@ int escolha;
             case 2:
                 listar_alunos();
                 break;
-            case 3; 
+            case 3:
                 buscar_alunos();
                 break;
-            case 4;
+            case 4:
                 editar_alunos();
                 break;
-            case 5;
+            case 5:
                 remover_alunos();
                 break;
-            case 6;
+            case 6:
                 chamada();
                 break;
-            case 7;
+            case 7:
                 salvar();
                 break;
-            case 0;
+            case 0:
                 printf("Fim da execução.\n");
                 return 0;
         }
     }
+while (escolha != 0);
+{
+    return 0;
+}
 
 }
 // FUNÇÃO INSERIR ALUNO
