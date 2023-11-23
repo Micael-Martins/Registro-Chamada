@@ -2,10 +2,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-// FUNÇÃO MENU PRINCIPAL
-int main(){ // do while prints, dps um switch case
-int escolha;
-    do{
+void limparBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+int main() {
+    Aluno listaDeChamada[100];
+    int tamanhoDaLista = 1;
+    int escolha;
+
+    do {
         printf("==================================\n");
         printf("MENU:\n");
         printf("1. Inserir um novo aluno\n");
@@ -16,66 +23,50 @@ int escolha;
         printf("6. Realizar chamada\n");
         printf("7. Salvar chamada\n");
         printf("0. Finalizar\n");
-        scanf("%d", &escolha);
+
+        char buffer[50];
+        if (fgets(buffer, sizeof(buffer), stdin) != NULL) {
+            if (sscanf(buffer, "%d", &escolha) != 1) {
+                limparBuffer();
+                printf("Escolha invalida. Tente novamente.\n");
+                continue;
+            }
+        } else {
+            printf("Erro na leitura. Finalizando o programa.\n");
+            return 1;
+        }
+
         printf("==================================\n");
-        switch(escolha){
+
+        switch (escolha) {
             case 1:
-                inserir_aluno();
+                inserirAluno(listaDeChamada, &tamanhoDaLista);
                 break;
             case 2:
-                listar_alunos();
+                listarAluno(listaDeChamada, tamanhoDaLista);
                 break;
             case 3:
-                buscar_alunos();
+                // buscar_alunos();
                 break;
             case 4:
-                editar_alunos();
+                // editar_alunos();
                 break;
             case 5:
-                remover_alunos();
+                // remover_alunos();
                 break;
             case 6:
-                chamada();
+                // chamada();
                 break;
             case 7:
-                salvar();
+                // salvar();
                 break;
             case 0:
-                printf("Fim da execução.\n");
+                printf("Fim da execucao.\n");
                 return 0;
+            default:
+                printf("Escolha invalida. Tente novamente.\n");
         }
-    }
-while (escolha != 0);
-{
+    } while (1);
+
     return 0;
-}
-
-}
-// FUNÇÃO INSERIR ALUNO
-int inserir_aluno(){
-
-}
-// FUNÇÃO LISTAR ALUNOS
-int listar_alunos(){
-
-}
-// FUNÇÃO BUSCAR ALUNOS
-int buscar_alunos(){
-
-}
-// FUNÇÃO EDITAR ALUNOS
-int editar_alunos(){
-
-}
-// FUNÇÃO REMOVER ALUNOS
-int remover_alunos(){
-
-}
-// FUNÇÃO CHAMADA, MARCANDO ALUNOS FALTANTES
-int chamada(){
-
-}
-// FUNÇÃO LER UMA DATA E SALVAR EM ARQUIVO NOMEADO PELA DATA
-int salvar(){
-
 }
