@@ -2,10 +2,111 @@
 #include <stdlib.h>
 #include <string.h>
 
-// FUNÇÃO MENU PRINCIPAL
-int main(){ // do while prints, dps um switch case
-int escolha;
-    do{
+typedef struct {
+    char nome[50];
+    char presenca;  // Nova variavel para chamada (P para presente e F para faltoso)
+    char dataChamada[11]; // Adicionada para armazenar a data da chamada (formato: dd/mm/yyyy)
+} Aluno;
+
+void limparBuffer() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);
+}
+
+void inserirAluno(Aluno *lista, int *posicao) {
+    if (*posicao < 100) {
+        printf("Digite o nome do aluno:\n");
+
+        char buffer[50];
+        if (fgets(buffer, sizeof(buffer), stdin) != NULL) {
+            buffer[strcspn(buffer, "\n")] = '\0'; // Remove o caractere de nova linha
+
+            // Se a leitura não resultar em um número, assume que é o nome do aluno
+            if (sscanf(buffer, "%d", posicao) != 1) {
+                printf("Digite o nome do aluno:\n");
+                strncpy(lista[*posicao].nome, buffer, sizeof(lista[*posicao].nome));
+                (*posicao)++;
+                printf("Aluno inserido com sucesso\n");
+                return;
+            }
+        }
+        printf("Erro ao inserir aluno. Tente novamente.\n");
+    } else {
+        printf("A lista de chamada está cheia. Impossivel adicionar mais alunos\n");
+    }
+}
+
+void listarAluno(Aluno *lista, int posicao) {
+    if (posicao > 0) {
+        printf("Lista de chamada:\n");
+        for (int i = 0; i < posicao; i++) {
+            printf("%d. %s - Presenca: ", i + 1, lista[i].nome);
+
+            // Mostrar "Presente" se a presença for 'P', caso contrário, mostrar "Faltoso"
+            if (lista[i].presenca == 'P') {
+                printf("Presente");
+            } else if (lista[i].presenca == 'F') {
+                printf("Faltoso");
+            } else {
+                printf("Desconhecido");  // Caso não se saiba a situação do aluno
+            }
+
+            // Mostrar a data da chamada ou desconhecido se não estiver definida
+            if (strlen(lista[i].dataChamada) > 0) {
+                printf(" - Data da chamada: %s\n", lista[i].dataChamada);
+            } else {
+                printf(" - Data da chamada: Desconhecido\n");
+            }
+        }
+    } else {
+        printf("A lista de chamada está vazia\n");
+    }
+}
+
+// Chamada
+void realizarChamada(Aluno *lista, int posicao) {
+    if (posicao > 0) {
+        int dia, mes, ano; // Variaveis da data
+        char dataChamada[11];
+        
+        do {
+            printf("Digite a data da chamada (formato dd/mm/yyyy):\n");
+            if (fgets(dataChamada, sizeof(dataChamada), stdin) != NULL) {
+                dataChamada[strcspn(dataChamada, "\n")] = '\0'; // Remove o caractere de nova linha
+            // Tentei adicionar uma mensagem caso a data seja inserida de maneira errada so que a mensagem não sai se quiser pode excluir ou conserta esse bo -Otton
+            } else {
+                printf("Erro na leitura da data. Chamada nao realizada.\n"); 
+                return;
+            }
+            // Impedimento para que data não seja introduzida de qualquer jeito
+        } while (sscanf(dataChamada, "%2d/%2d/%4d", &dia, &mes, &ano) != 3 || dia < 1 || dia > 31 || mes < 1 || mes > 12 || ano < 1000 || ano > 9999);
+
+        printf("Realizar chamada em %s:\n", dataChamada);
+        for (int i = 0; i < posicao; i++) {
+            printf("%d. %s - Presenca (P/F): ", i + 1, lista[i].nome);
+            char presenca;
+            scanf(" %c", &presenca);
+
+            // Caso seja entregue algo diferente de P ou F
+            while (presenca != 'P' && presenca != 'F') {
+                printf("Entrada invalida. Digite P para presente ou F para faltoso: ");
+                scanf(" %c", &presenca);
+            }
+
+            lista[i].presenca = presenca;
+            strncpy(lista[i].dataChamada, dataChamada, sizeof(lista[i].dataChamada));
+        }
+    } else {
+        printf("A lista de chamada esta vazia\n");
+    }
+}
+
+int main() {
+    Aluno listaDeChamada[100];
+    int tamanhoDaLista = 0;  // Troquei para zero pois estava bugando e não sabia o motivo -Otton
+    int escolha;
+
+    do {
         printf("==================================\n");
         printf("MENU:\n");
         printf("1. Inserir um novo aluno\n");
@@ -16,66 +117,50 @@ int escolha;
         printf("6. Realizar chamada\n");
         printf("7. Salvar chamada\n");
         printf("0. Finalizar\n");
-        scanf("%d", &escolha);
+
+        char buffer[50];
+        if (fgets(buffer, sizeof(buffer), stdin) != NULL) {
+            if (sscanf(buffer, "%d", &escolha) != 1) {
+                limparBuffer();
+                printf("Escolha invalida. Tente novamente.\n");
+                continue;
+            }
+        } else {
+            printf("Erro na leitura. Finalizando o programa.\n");
+            return 1;
+        }
+
         printf("==================================\n");
-        switch(escolha){
+
+        switch (escolha) {
             case 1:
-                inserir_aluno();
+                inserirAluno(listaDeChamada, &tamanhoDaLista);
                 break;
             case 2:
-                listar_alunos();
+                listarAluno(listaDeChamada, tamanhoDaLista);
                 break;
             case 3:
-                buscar_alunos();
+                // buscar_alunos();
                 break;
             case 4:
-                editar_alunos();
+                // editar_alunos();
                 break;
             case 5:
-                remover_alunos();
+                // remover_alunos();
                 break;
             case 6:
-                chamada();
+                realizarChamada(listaDeChamada, tamanhoDaLista);
                 break;
             case 7:
-                salvar();
+                // salvar();
                 break;
             case 0:
-                printf("Fim da execução.\n");
+                printf("Fim da execucao.\n");
                 return 0;
+            default:
+                printf("Escolha invalida. Tente novamente.\n");
         }
-    }
-while (escolha != 0);
-{
+    } while (1);
+
     return 0;
-}
-
-}
-// FUNÇÃO INSERIR ALUNO
-int inserir_aluno(){
-
-}
-// FUNÇÃO LISTAR ALUNOS
-int listar_alunos(){
-
-}
-// FUNÇÃO BUSCAR ALUNOS
-int buscar_alunos(){
-
-}
-// FUNÇÃO EDITAR ALUNOS
-int editar_alunos(){
-
-}
-// FUNÇÃO REMOVER ALUNOS
-int remover_alunos(){
-
-}
-// FUNÇÃO CHAMADA, MARCANDO ALUNOS FALTANTES
-int chamada(){
-
-}
-// FUNÇÃO LER UMA DATA E SALVAR EM ARQUIVO NOMEADO PELA DATA
-int salvar(){
-
 }
