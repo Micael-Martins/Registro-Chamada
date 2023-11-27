@@ -91,6 +91,7 @@ void realizarChamada(Aluno *lista, int posicao) {
                 printf("Entrada invalida. Digite P para presente ou F para faltoso: ");
                 scanf(" %c", &presenca);
             }
+         limparBuffer();
 
             lista[i].presenca = presenca;
             strncpy(lista[i].dataChamada, dataChamada, sizeof(lista[i].dataChamada));
@@ -141,7 +142,7 @@ int main() {
         char buffer[50];
         if (fgets(buffer, sizeof(buffer), stdin) != NULL) {
             if (sscanf(buffer, "%d", &escolha) != 1) {
-                limparBuffer();
+               // limparBuffer();
                 printf("Escolha invalida. Tente novamente.\n");
                 continue;
             }
