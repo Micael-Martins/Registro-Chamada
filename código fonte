@@ -58,7 +58,7 @@ void listarAluno(Aluno *lista, int posicao) {
             }
         }
     } else {
-        printf("A lista de chamada está vazia\n");
+        printf("A lista de chamada esta vazia\n");
     }
 }
 
@@ -97,6 +97,27 @@ void realizarChamada(Aluno *lista, int posicao) {
         }
     } else {
         printf("A lista de chamada esta vazia\n");
+    }
+}
+
+// Remover Aluno
+void removerAluno(Aluno *lista, int *posicao, const char *nome) {
+    int indice = -1;
+    for (int i = 0; i < *posicao; i++) {
+        if (strcmp(lista[i].nome, nome) == 0) {
+            indice = i;
+            break;
+        }
+    }
+
+    if (indice != -1) {
+        for (int i = indice; i < *posicao - 1; i++) {
+            lista[i] = lista[i + 1];
+        }
+        (*posicao)--;
+        printf("Aluno %s removido.\n", nome);
+    } else {
+        printf("Aluno nao foi encontrado.\n");
     }
 }
 
@@ -144,9 +165,17 @@ int main() {
             case 4:
                 // editar_alunos();
                 break;
-            case 5:
-                // remover_alunos();
+            case 5: {
+                char nomeRemover[50];
+                printf("Digite o nome do aluno a ser removido:\n");
+                if (fgets(nomeRemover, sizeof(nomeRemover), stdin) != NULL) {
+                    nomeRemover[strcspn(nomeRemover, "\n")] = '\0'; // Remove o caractere de nova linha
+                    removerAluno(listaDeChamada, &tamanhoDaLista, nomeRemover);
+                } else {
+                    printf("Erro na leitura do nome. Tente novamente.\n");
+                }
                 break;
+            }
             case 6:
                 realizarChamada(listaDeChamada, tamanhoDaLista);
                 break;
