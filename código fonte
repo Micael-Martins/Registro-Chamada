@@ -151,7 +151,7 @@ void removerAluno(Aluno *lista, int *posicao, const char *nome){
     }
     else
     {
-        printf("Aluno não foi encontrado.\n");
+        printf("Aluno nao foi encontrado.\n");
     }
 }
 
