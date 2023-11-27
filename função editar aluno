@@ -1,0 +1,27 @@
+void editar_alunos(Aluno *lista, int posicao){
+    printf("Escolha um aluno para editar:\n");
+    if (posicao > 0) {
+        for (int i = 0; i < posicao; i++) {
+            printf("%d. %s - Presenca:\n ", i + 1, lista[i].nome);
+        }
+
+        int escolha;
+        printf("Digite o numero do aluno que deseja editar: ");
+        scanf("%d", &escolha);
+
+        if (escolha >= 1 && escolha <= posicao) {
+            limparBuffer();
+
+            printf("Edite o nome do aluno %d: ", escolha);
+            fgets(lista[escolha - 1].nome, sizeof(lista[escolha - 1].nome), stdin);
+
+            lista[escolha - 1].nome[strcspn(lista[escolha - 1].nome, "\n")] = '\0';
+
+            printf("Nome do aluno editado com sucesso.\n");
+        } else {
+            printf("Escolha invalida.\n");
+        }
+    } else {
+        printf("A lista de chamada esta vazia\n");
+    }
+}
