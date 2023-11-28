@@ -204,7 +204,18 @@ void editar_alunos(Aluno *lista, int posicao){
         printf("A lista de chamada esta vazia\n");
     }
 }
-
+void salvar(Aluno *lista, int posicao, const char *arquivoChamada){//const char *arquivoChamada é o nome do arquivo- arthur
+           FILE *arquivo = fopen(arquivoChamada, "w");            //cria arquivo, se ja tiver vai sobrescrever- arthur 
+           if(arquivo != NULL){                                      // só verifica que tem um arquivo ai msm
+                for (int i = 0; i < posicao; i++){
+                    fprintf(arquivo, "%s,%c,%s\n", lista[i].nome, lista[i].presenca, lista[i].dataChamada);
+                } 
+                fclose (arquivo);
+                printf("Lista de chamada salva com sucesso.\n");
+           }else{
+            printf("Erro na abertura do arquivo\n");
+           }
+}
 
 int main(){
     Aluno listaDeChamada[100];
@@ -325,7 +336,7 @@ int main(){
             realizarChamada(listaDeChamada, tamanhoDaLista);
             break;
         case 7:
-            // salvar();
+            salvar(listaDeChamada, tamanhoDaLista,"arquivoChamada.txt");
             break;
         case 0:
             printf("Fim da execucao.\n");
