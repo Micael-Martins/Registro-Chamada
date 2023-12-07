@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define VERMELHO     "\x1b[31m"
+#define VERDE   "\x1b[32m"
+#define AZUL    "\x1b[34m"
+#define YEL   "\x1B[33m"
+#define RESET   "\x1b[0m"
+
 typedef struct
 {
     char nome[50];
@@ -56,15 +62,15 @@ void listarAluno(Aluno *lista, int posicao)
             // Mostrar "Presente" se a presença for 'P', caso contrário, mostrar "Faltoso"
             if (lista[i].presenca == 'P')
             {
-                printf("Presente");
+                printf(VERDE "Presente" RESET);
             }
             else if (lista[i].presenca == 'F')
             {
-                printf("Faltoso");
+                printf(VERMELHO"Faltoso" RESET);
             }
             else
             {
-                printf("Desconhecido"); // Caso não se saiba a situação do aluno
+                printf(AZUL "Desconhecido" RESET); // Caso não se saiba a situação do aluno
             }
 
             // Mostrar a data da chamada ou desconhecido se não estiver definida
@@ -218,21 +224,21 @@ void salvar(Aluno *lista, int posicao, const char *arquivoChamada){//const char 
 }
 
 int main(){
-    Aluno listaDeChamada[100];
+    Aluno *listaDeChamada = malloc(100 * sizeof(Aluno));
     int tamanhoDaLista = 0;
     int escolha;
 
     do{
-        printf("==================================\n");
+        printf("=================================================\n");
         printf("MENU:\n");
-        printf("1. Inserir um novo aluno\n");
-        printf("2. Listar alunos\n");
-        printf("3. Buscar aluno\n");
-        printf("4. Editar aluno\n");
-        printf("5. Remover aluno\n");
-        printf("6. Realizar chamada\n");
-        printf("7. Salvar chamada\n");
-        printf("0. Finalizar\n");
+        printf(AZUL"1." RESET " Inserir um novo aluno\n");
+        printf(AZUL"2." RESET " Listar alunos\n");
+        printf(AZUL"3." RESET " Buscar aluno\n");
+        printf(AZUL"4." RESET " Editar aluno\n");
+        printf(AZUL"5." RESET " Remover aluno\n");
+        printf(AZUL"6." RESET " Realizar chamada\n");
+        printf(AZUL"7." RESET " Salvar chamada\n");
+        printf(AZUL"0." RESET " Finalizar\n");
 
         char buffer[50];
         if (fgets(buffer, sizeof(buffer), stdin) != NULL)
@@ -249,7 +255,7 @@ int main(){
             return 1;
         }
 
-        printf("==================================\n");
+        printf("=================================================\n");
 
         switch (escolha)
         {
